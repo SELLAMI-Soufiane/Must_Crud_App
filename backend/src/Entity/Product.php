@@ -6,6 +6,8 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -16,26 +18,31 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(type="integer", property="id")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @SWG\Property(type="string", property="name")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @SWG\Property(type="string", property="url")
      */
     private $url;
 
     /**
      * @ORM\Column(type="text")
+     * @SWG\Property(type="string", property="description")
      */
     private $description;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @SWG\Property(type="boolean", property="active"),
      */
     private $active;
 

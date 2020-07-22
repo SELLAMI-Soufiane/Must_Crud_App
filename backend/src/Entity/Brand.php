@@ -6,7 +6,8 @@ use App\Repository\BrandRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 /**
  * @ORM\Entity(repositoryClass=BrandRepository::class)
  */
@@ -16,11 +17,13 @@ class Brand
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(type="integer", property="id")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @SWG\Property(type="string", property="name"),
      */
     private $name;
 
