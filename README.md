@@ -37,4 +37,4 @@ Utilisateur créé via les fixtures :
 
 ## Documentation
 
-- Pour consulter la documentation des différentes routes de l'api, il faut utiliser le lien suivant : http://127.0.0.1:8000/api
+- Pour consulter la documentation des différentes routes de l'api, il faut utiliser le lien suivant : http://127.0.0.1:8000/doc
