@@ -40,13 +40,13 @@ class Product
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity=brand::class, inversedBy="products")
+     * @ORM\ManyToOne(targetEntity=Brand::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $brand;
 
     /**
-     * @ORM\ManyToMany(targetEntity=category::class, inversedBy="products")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="products")
      */
     private $categories;
 
@@ -108,9 +108,13 @@ class Product
         return $this;
     }
 
-    public function getBrand(): ?brand
+    public function getBrand(): ?array
     {
-        return $this->brand;
+        $brand = $this->brand;
+        return array(
+            'id' => $brand->getId(),
+            'name' => $brand->getName(),
+        );
     }
 
     public function setBrand(?brand $brand): self
@@ -121,11 +125,18 @@ class Product
     }
 
     /**
-     * @return Collection|category[]
+     * @return array|category[]
      */
-    public function getCategories(): Collection
+    public function getCategories(): array
     {
-        return $this->categories;
+        $categoriesArray = [];
+        foreach ($this->categories as $category){
+            $categoriesArray[] = array(
+                'id' => $category->getId(),
+                'name' => $category->getName(),
+            );
+        }
+        return $categoriesArray;
     }
 
     public function addCategory(category $category): self

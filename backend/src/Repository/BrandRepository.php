@@ -19,6 +19,26 @@ class BrandRepository extends ServiceEntityRepository
         parent::__construct($registry, Brand::class);
     }
 
+    public function render(Brand $brand)
+    {
+        return [
+            'id'    => (int) $brand->getId(),
+            'name' => (string) $brand->getName(),
+        ];
+    }
+
+    public function renderAll ()
+    {
+        $brands = $this->findAll();
+        $brandsArray = [];
+
+        foreach ($brands as $brand) {
+            $brandsArray[] = $this->render($brand);
+        }
+
+        return $brandsArray;
+    }
+
     // /**
     //  * @return Brand[] Returns an array of Brand objects
     //  */

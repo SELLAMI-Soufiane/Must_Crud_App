@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Brand;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,45 @@ class ProductRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
+    }
+
+    public function render(Product $product)
+    {
+        return [
+            'id'    => (int) $product->getId(),
+            'md5 '    => (string) md5($product->getId()),
+            'name' => (string) $product->getName(),
+            'description' => (string) $product->getDescription(),
+            'url' => (string) $product->getUrl(),
+            'brand' => (array) $product->getBrand(),
+            'categories' => (array) $product->getCategories(),
+        ];
+    }
+
+    public function renderAll ()
+    {
+        $products = $this->findAll();
+        $productsArray = [];
+
+        foreach ($products as $product) {
+            $productsArray[] = $this->render($product);
+        }
+
+        return $productsArray;
+    }
+
+    public function saveProduct(Request $request, Product $product, Brand $brand)
+    {
+        $product->setName($request->get('name'));
+        $product->setBrand($brand);
+        $product->setDescription($request->get('description'));
+        if (! $request->get('url')) {
+            $product->setUrl($request->get('url'));
+        }
+        if (! $request->get('active')) {
+            $product->setActive($request->get('active'));
+        }
+        return $product;
     }
 
     // /**
